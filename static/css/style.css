@@ -1,0 +1,40 @@
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	font-family: arial;
+}
+
+body {
+	background-color: #FFFFFF;
+}
+
+ul {
+	list-style: none;
+}
+
+header {
+	width: 100%;
+	background-color: #d5dd61;
+}
+
+header h1 {
+	margin-left: 20px
+}
+
+main {
+	max-width: 750px;
+	margin: 0 auto;
+	background-color: #F5F5F0;
+}
+
+footer {
+	background-color: #000000;
+	padding: 2px 0;
+	color: #ffffff;
+}
+
+footer p {
+	width: 200px;
+	margin: auto;
+}
