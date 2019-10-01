@@ -6,7 +6,9 @@ from flask_socketio import SocketIO
 from flask import Flask, render_template, url_for
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
+
+chatBackup = []
 
 app = Flask(__name__)
 socketio = SocketIO(app)
