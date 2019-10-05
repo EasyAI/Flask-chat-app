@@ -77,8 +77,8 @@ def sanitised(message):
 
     sMessage = message
 
-    sMessage = (message.replace('<', ' ')).replace('>', ' ')
-    sMessage = (message.replace('{', ' ')).replace('}', ' ')
+    sMessage = (sMessage.replace('<', '')).replace('>', '')
+    sMessage = (sMessage.replace('{', '')).replace('}', '')
 
     return(sMessage)
 
