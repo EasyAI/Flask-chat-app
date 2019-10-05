@@ -5,9 +5,10 @@ import logging
 from flask_socketio import SocketIO
 from flask import Flask, render_template, url_for
 
-
+## Current output status for messages.
 logging.basicConfig(level=logging.INFO)
 
+## List to store past messages/names.
 chatBackup = []
 
 app = Flask(__name__)
@@ -35,13 +36,14 @@ def dated_url_for(endpoint, **values):
 
 @app.route('/', methods=['GET'])
 def main_page():
-    ''' Used to get the control panel page. '''
+    ''' Used to get the chatroom.html page '''
     return(render_template('chatroom.html'))
 
-# 
+
 @socketio.on('join_chatroom')
 def join_chatroom():
     '''
+    If a chatroom is joined then all the previous messages will be sent out again.
     '''
     if chatBackup != []:
         fmtChatHistory = ""
@@ -52,19 +54,33 @@ def join_chatroom():
 
         socketio.emit('new_join', fmtChatHistory)
 
-# 
+
 @socketio.on('send_message')
 def send_message(data):
     '''
+    If a message is sent, its username and message will be saved to a list.
     '''
-    chatBackup.append([data['username'], data['message']])
+    message = sanitised(data['message'])
+    chatBackup.append([data['username'], message])
 
     fmntMsg = '<li>{0} : {1}</li><br>'.format(
         data['username'],
-        data['message'])
+        message)
     
     socketio.emit('new_message', fmntMsg)
 
+
+def sanitised(message):
+    '''
+    Super basic way to sanitise a message by eliminating angle brackets.
+    '''
+
+    sMessage = message
+
+    sMessage = (message.replace('<', ' ')).replace('>', ' ')
+    sMessage = (message.replace('{', ' ')).replace('}', ' ')
+
+    return(sMessage)
 
 if __name__ == '__main__':                
     socketio.run(app)
